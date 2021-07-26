@@ -1,0 +1,80 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-sm navbar-light">
+    <span class="navbar-brand mx-3 mb-0 h1" style="color:rgba(255, 255, 255, 0.932)">Travel Buddy</span>
+
+    <button class="navbar-toggler ms-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+        <ul class="navbar-nav" style="margin:0px 50px 0px auto">
+            <li class="nav-item active mx-3">
+                <a class="nav-link" routerLink="/Login" style="color:rgba(255, 255, 255, 0.932)"><strong>
+                        SignIn</strong></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- Form to Create Account -->
+<div class="container comp">
+    <form [formGroup]="form" class="form my-4 mx-2" (ngSubmit)="CreateAccount()">
+        <div class="my-4 mx-2 text-center">
+            <h2 class="my-4">Sign Up</h2>
+        </div>
+        <div class="my-4 mx-2">
+            <input type="text" formControlName="Name" placeholder="Name" class="form-control">
+            <div *ngIf='(Name?.touched || submitted) && Name?.errors?.required' class='warn my-1 mx-2'>Please enter a
+                Valid User Name.</div>
+        </div>
+        <div class="my-4 mx-2">
+            <input type="email" formControlName="Email" placeholder="Email" class="form-control">
+            <!-- test spinner here -->
+            <span *ngIf="Email?.pending" class="spin spinner-border text-warning my-0 mx-2" role="status"></span>
+            <span *ngIf="Email?.pending" class="check text-warning">Checking if the Email is available</span>
+            <div *ngIf='(Email?.touched) && (Email?.errors?.uniqueEmailValidator)' class='warn my-1 mx-2'>Email is not
+                Unique</div>
+            <div *ngIf='(Email?.touched|| submitted) && (Email?.errors?.required||Email?.errors?.email)'
+                class='warn my-1 mx-2'>Please enter a Valid Email.</div>
+        </div>
+        <div class="my-4 mx-2">
+            <input type="text" formControlName="PhoneNumber" placeholder="Mobile Number" class="form-control">
+            <!-- test spinner here -->
+            <span *ngIf="PhoneNumber?.pending" class="spin spinner-border text-warning my-0 mx-2" role="status"></span>
+            <span *ngIf="PhoneNumber?.pending" class="check text-warning">Checking if the Phone Number is
+                available</span>
+            <div *ngIf='(PhoneNumber?.touched || submitted) && (PhoneNumber?.errors?.uniquePhoneNumber)'
+                class='warn my-1 mx-2'>PhoneNumber is not Unique</div>
+            <div *ngIf='(PhoneNumber?.touched || submitted) && (PhoneNumber?.errors?.required||PhoneNumber?.errors?.pattern)'
+                class='warn my-1 mx-2'>Please enter a Valid Mobile Number.</div>
+        </div>
+        <div class="my-4 mx-2">
+            <input type="password" formControlName="Password" placeholder="Password" class="form-control">
+            <div *ngIf='(Password?.touched|| submitted) && Password?.errors?.required' class='warn my-1 mx-2'>Please
+                enter the Password.</div>
+        </div>
+        <div class=" mx-2">
+            <label for="DOB">DOB</label>
+            <input type="date" formControlName="DOB" placeholder="mm-dd-yyyy" id="DOB" class="form-control my-2">
+            <div *ngIf='(DOB?.touched|| submitted) && DOB?.errors?.required' class='warn my-1 mx-2'>Please enter a valid
+                Date Of Birth.</div>
+        </div>
+        <div class="my-4 mx-2">
+            <div class='form-group mt-4'>
+                <div class="form-check form-check-inline ">
+                    <input formControlName="Gender" type="radio" value='Male' class='form-check-input' checked>
+                    <label class="form-check-label" for="Gender">Male</label>
+                </div>
+                <div class="form-check form-check-inline ">
+                    <input formControlName="Gender" type="radio" value='Female' class='form-check-input'>
+                    <label for="on_off_shore" class="form-check-label">Female</label>
+                </div>
+            </div>
+            <div *ngIf='(Gender?.touched|| submitted) && Gender?.errors?.required' class='warn my-1 mx-2'>Please Select
+                Gender.</div>
+        </div>
+        <div class="my-4 mx-2 text-center">
+            <input type="submit" value="Sign-in" class="btn btn-primary click">
+        </div>
+    </form>
+</div>

@@ -1,0 +1,20 @@
+.comp{
+    background-color: rgba(255,255,255,0.5);
+    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.9) inset, 0 0 8px rgba(0, 0, 0, 0.075);
+    width:100%;
+    margin:50px auto 50px auto ;
+    border: 2px solid grey;
+    border-radius: 25px;
+    /* remove boarder after adding color */
+}
+.searchItems{
+    display: inline-block;
+}
+.warn{
+    color:red;
+    font-size: 15px;
+}
+.warn1{
+    color:red;
+    font-size: 30px;
+}

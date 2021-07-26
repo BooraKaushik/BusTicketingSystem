@@ -1,0 +1,17 @@
+<div class="comp">
+    <div class="mx-2 mx-md-4 my-4">
+        <div class="text-center heading">Payment Successful</div>
+        <div *ngIf="triggerSuccess">
+            <div *ngFor="let i of triggerSuccess?.PassengerDetails?.seatNumbers; let j =index" class="comp">
+                <div class="mx-md-4 my-4 row">
+                    <div class="col-md-4">Seat Number: {{i}}</div>
+                    <div class="col-md-4">Passenger Name: {{a[j]?.Name}}</div>
+                    <div class="col-md-4">Confirmed</div>
+                </div>
+            </div>
+            <button class="btn btn-success" (click)="downloadPDF()">
+                download invoice
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-sm navbar-light" >
+  <span class="navbar-brand mx-1 mx-md-3 mb-0 h1" style="color:rgba(255, 255, 255, 0.932)">Travel Buddy</span>
+  <button class="navbar-toggler ms-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+      <ul class="navbar-nav" style="margin:0px 50px 0px auto">
+        <li class="nav-item active mx-3"  *ngIf="!UserName">
+          <a class="nav-link" style="color:rgba(255, 255, 255, 0.932)" routerLink="/Login"><strong> SignIn</strong></a>
+        </li> 
+        <li class="nav-item active mx-3" *ngIf="UserName">
+          <a class="nav-link" style="color:rgba(255, 255, 255, 0.932)">Welcome, <strong>{{UserName}}</strong></a>   
+        </li>  
+        <li class="nav-item active mx-3" *ngIf="UserName">
+          <a  class="nav-link" style="color:rgba(255, 255, 255, 0.932)" routerLink="" (click)="logOut()"><strong> LogOut</strong></a>
+        </li> 
+      </ul>
+    </div>
+  </nav>
+  <!-- STATUS BAR -->
+ <div class="p-img">
+    <ul>
+      <li>
+        <img src="../../assets/search3.png" alt="Search Bus"><br>
+        <i class="fas fa-check color_green" *ngIf="busDataExtracted"></i>
+        <i class="fas fa-sync color_orange" *ngIf="!busDataExtracted"></i>
+        <div class="SuccessBar progress" style="height:5px">
+          <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width':(!busDataExtracted)?'100%':'0%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <p [ngClass]="{'color_green':busDataExtracted,'color_orange':!busDataExtracted}" ><strong>Search Bus</strong></p>
+      </li>
+      <li>
+        <img src="../../assets/seat1.png" alt="Select Seat"><br>
+        <i class="fas fa-check color_green" *ngIf="busDataExtracted&&paymentDataExtracted"></i>
+        <i class="fas fa-sync color_orange" *ngIf="busDataExtracted&&!paymentDataExtracted"></i>
+        <i class="fas fa-times color_red" *ngIf="!busDataExtracted&&!paymentDataExtracted"></i>
+        <div class="SuccessBar progress" style="height:5px;">
+          <div class="progress-bar bg-success"
+          role="progressbar" [ngStyle]="{'width':(busDataExtracted&&!paymentDataExtracted)?'100%':'0%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <p [ngClass]="{'color_green':busDataExtracted&&paymentDataExtracted,'color_orange':busDataExtracted&&!paymentDataExtracted,'color_red':!busDataExtracted&&!paymentDataExtracted}"><strong>Select Seat</strong></p>
+      </li>
+      <li>
+        <img src="../../assets/1530786-200.png" alt="Payment"><br>
+        <i class="fas fa-check color_green" *ngIf="paymentDataExtracted&&triggerSuccess"></i>
+        <i class="fas fa-sync color_orange" *ngIf="paymentDataExtracted&&!triggerSuccess"></i>
+        <i class="fas fa-times color_red" *ngIf="!paymentDataExtracted&&!triggerSuccess"></i>
+        <div class="SuccessBar progress" style="height:5px">
+          <div class="progress-bar bg-success" 
+          role="progressbar" [ngStyle]="{'width':(paymentDataExtracted&&!triggerSuccess)?'100%':'0%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <p [ngClass]="{'color_green':paymentDataExtracted&&triggerSuccess,'color_orange':paymentDataExtracted&&!triggerSuccess,'color_red':!paymentDataExtracted&&!triggerSuccess}"><strong>Payment</strong></p>
+      </li>
+      <li>
+        <img src="../../assets/confirmation3.png" alt="Confirmation"><br>
+        <i class="fas fa-check color_green" *ngIf="triggerSuccess"></i>
+        <i class="fas fa-times color_red" *ngIf="!triggerSuccess"></i>
+        <div class="SuccessBar progress" style="height:5px">
+          <div class="progress-bar bg-success"
+          role="progressbar" [ngStyle]="{'width':(triggerSuccess)?'100%':'0%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <p [ngClass]="{'color_green':triggerSuccess,'color_red':!triggerSuccess}"><strong>Confirmation</strong></p>
+      </li>
+    </ul>
+  </div>
+  
+
+<!-- CHILD COMPONENTS -->
+  <app-search-bus *ngIf="!busDataExtracted" (busData)="getBusData($event)"></app-search-bus>
+  <app-select-seat *ngIf="busDataExtracted&&!paymentDataExtracted" [Data]="busDataExtracted" (PaymentData)="getPaymentData($event)" (PaymentDataFinalPage)="getPaymentDataFinalPage($event)"></app-select-seat>
+  <app-payments *ngIf="paymentDataExtracted&&!triggerSuccess" [PaymentFinalData]="PaymentFinalData" [UserData]="paymentDataExtracted" (Confirmation)="getConfirmation($event)" (triggerSuccess)="getTriggerSuccess($event)"></app-payments>
+  <app-confirmation *ngIf="triggerSuccess" [TriggerSuccess]="triggerSuccess" [Confirmation]="confirmation"></app-confirmation>
+  
+  

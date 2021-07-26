@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.form-control.ng-touched.ng-invalid{
+    border-color: red;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px red;
+    outline: 0 none;
+}
+body{
+    background-image: url("./assets/bus8.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+.navbar.navbar-light{
+    background-color: rgba(63, 62, 62, 0.082);
+    width:100%
+}

@@ -1,0 +1,123 @@
+<!-- SEAT LAYOUT -->
+<div class="mx-auto comp row" style="width:90%">
+    <div class="col-md-4">
+        <div class="my-5 p-1 mx-auto row" style="width:90%; border:2px solid grey; border-radius: 25px">
+            <div class="text-center" [class.col-7]="(colCount%2)===1" [class.col-6]="(colCount%2)===0">
+                <div class="LR">Right</div>
+                <div class="my-3 mx-auto" *ngFor="let c of row; let i=index">
+                    <span class="mx-auto" *ngFor="let r of c[0]; let j=index">
+                        <span *ngIf="!r" class="material-icons mx-2 hovSeat"
+                            [class.is_available]="Availability[((rowCount-i-1)*(colCount)+(j+1))-1]"
+                            [class.is_selected]="!Availability[((rowCount-i-1)*(colCount)+(j+1))-1]"
+                            (click)="SelectSeat(((rowCount-i-1)*(colCount)+(j+1)-1))"
+                            tooltip="{{((rowCount-i-1)*(colCount)+(j+1))+'\nAvaliable'}}">
+                            event_seat
+                        </span>
+
+                        <span *ngIf="r" class="material-icons mx-2 not_available"
+                            tooltip="{{((rowCount-i-1)*(colCount)+(j+1))+'\nNot Avaliable'}}">event_seat</span>
+                    </span>
+
+                </div>
+            </div>
+            <div class="text-center" [class.col-5]="(colCount%2)===1" [class.col-6]="(colCount%2)===0">
+                <div class="LR">Left</div>
+                <div class="my-3 mx-auto" *ngFor="let c of row; let i=index">
+                    <span class="mx-auto" *ngFor="let r of c[1]; let j=index">
+                        <span *ngIf="!r" class="material-icons mx-2"
+                            [class.is_available]="Availability[((rowCount-i-1)*(colCount)+(j+1+halfValue))-1]"
+                            [class.is_selected]="!Availability[((rowCount-i-1)*(colCount)+(j+1+halfValue))-1]"
+                            (click)="SelectSeat(((rowCount-i-1)*(colCount)+(j+1+halfValue))-1)"
+                            tooltip="{{(((rowCount-i-1)*(colCount)+(j+1+halfValue)))+'\nAvaliable'}}">
+                            event_seat
+                        </span>
+                        <span *ngIf="r" class="material-icons mx-2 not_available"
+                            tooltip="{{(((rowCount-i-1)*(colCount)+(j+1+halfValue)))+'\nNot Avaliable'}}">event_seat</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="LR text-center">This Way FRONT</div>
+        </div>
+        <div class="text-center">
+            <span class="material-icons mx-2 not_available">event_seat</span><span class="LR">Not Available</span><br>
+            <span class="material-icons mx-2 is_available">event_seat</span><span class="LR">Available</span><br>
+            <span class="material-icons mx-2 is_selected">event_seat</span><span class="LR">Selected</span>
+        </div>
+    </div>
+    <!-- PAYMENT INFORMATION -->
+    <div class="col-md-7 mx-auto ">
+        <div class="mx-auto my-5 info px-1 px-md-3">
+            <div class="boldText my-2 row">
+                <span class="col-md-5 blockquote">From:</span>
+                <span class="col-md-5 blockquote">{{busData?.From}}</span>
+            </div>
+            <div class="boldText my-2 row">
+                <span class="col-md-5 blockquote">To:</span>
+                <span class="col-md-5 blockquote">{{busData?.To}}</span>
+            </div>
+            <div class="boldText my-2 row">
+                <span class="col-md-5 blockquote">Date:</span>
+                <span class="col-md-5 blockquote">{{busData?.DateOfJourney | date:'yyyy-MM-dd'}}</span>
+            </div>
+            <div class="boldText my-2 row">
+                <span class="col-md-5 blockquote">Bus Type:</span>
+                <span class="col-md-5 blockquote">{{busData?.BusType}}</span>
+            </div>
+
+            <div class="boldText my-2 row">
+                <form *ngIf="enableSubmit" #f='ngForm' (ngSubmit)="submit(f)">
+                    <div class="boldText my-2 row">
+                        <span class="col-md-5 blockquote">Seat Number(s):</span>
+                        <span class="col-md-5 blockquote d-flex flex-wrap"><span
+                                *ngFor="let a of updatedSeats">{{a+','}}&nbsp;</span> </span>
+                    </div>
+                    <div *ngFor="let item of updatedSeats" class="boldText my-2 row">
+                        <span class="col-md-5 formStyle mx-auto">
+                            <input required minlength='1' maxlength='30' pattern='[A-Z a-z]*' ngModel
+                                name="{{'Name_'+item}}" #{{item}}='ngModel' type="text" class='form-control'
+                                placeholder='Name'>
+
+
+                        </span>
+                        <span class="col-md-5 formStyle mx-auto">
+                            <div class='form-group'>
+                                <div class="form-check form-check-inline ">
+                                    <input ngModel name="{{'Gender_'+item}}" #{{item}}='ngModel' type="radio"
+                                        id="{{'Gender_'+item}}" value='Male' class='form-check-input'>
+                                    <label class="form-check-label" for="{{'Gender_'+item}}">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline ">
+                                    <input ngModel name="{{'Gender_'+item}}" #{{item}}='ngModel' type="radio"
+                                        id="{{'Gender_'+item}}" value='Female' class='form-check-input'>
+                                    <label for="{{'Gender_'+item}}" class="form-check-label">Female</label>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="boldText my-2 row">
+                        <span class="col-md-5 blockquote">Total Seats:</span>
+                        <span class="col-md-5 blockquote">{{updatedSeats?.length}}</span>
+                    </div>
+                    <div class="boldText my-2 row">
+                        <span class="col-md-5 blockquote">Fare:</span>
+                        <span class="col-md-5 blockquote">{{fare| currency:'INR'}}</span>
+                    </div>
+                    <div class="boldText my-2 row">
+                        <span class="col-md-5 blockquote">Service Tax:</span>
+                        <span class="col-md-5 blockquote">{{tax | currency:'INR'}}</span>
+                    </div>
+                    <div class="boldText my-2 row">
+                        <span class="col-md-5 blockquote">Total Charges:</span>
+                        <span class="col-md-5 blockquote">{{totalFare| currency:'INR'}}</span>
+                    </div>
+                    <div class="my-2 mx-0 mx-md-2" *ngIf="enableSubmit">
+                        <button type="submit" class="btn btn-success" [disabled]="!f.valid">
+                            Proceed to Pay
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<!-- BUS SEARCH FORM -->
+<div class="container comp">
+    <form [formGroup]="form" class="row gx-1 form mt-4 mx-auto" style="width:100%" (ngSubmit)="SearchBuses()">
+        <div class="col-lg-3 mt-4 mx-2 searchItem">
+            <input type="text" formControlName="From" placeholder="From" class="form-control" [typeahead]="places">
+            <div 
+            *ngIf='(From?.touched ) && From?.errors'
+            class='warn my-1 mx-2'>Please enter a Valid Place Name.</div>
+        </div>
+        <div class="col-lg-3 mt-4 mx-2 searchItem">
+            <input type="text" formControlName="To" placeholder="To" class="form-control" [typeahead]="places">
+            <div 
+            *ngIf='(To?.touched) && To?.errors'
+            class='warn my-1 mx-2'>Please enter a Valid Destination.</div>
+        </div>
+        <div class="col-lg-3 mt-4 mx-2 searchItem">
+            <input type="text"
+            placeholder="MM/DD/YYYY" formControlName="DateOfTravel" class="form-control" bsDatepicker>
+            <div 
+            *ngIf='(DateOfTravel?.touched) && DateOfTravel?.errors?.required'
+            class='warn my-1 mx-2'>Please enter a Valid Date.</div>
+        </div>
+        <div class="col-lg-1 mt-4 mx-2 text-center">
+            <input type="submit" [disabled]="submit" value="Search" class="btn btn-primary click">
+        </div>
+    
+    </form>
+    <div class="mx-3 mb-4 "><a (click)="Edit()" class="alert-link" style="font-size: 15px;">Edit</a> | <a  (click)="clear()" class="alert-link" style="font-size: 15px;">Clear</a></div>
+    <div 
+    *ngIf='successData&&(!successData?.success)'
+    class='warn1 mb-4 mx-2'>No Buses Available </div>
+    <!-- TABLE FOR BUS DATA -->
+    <div *ngIf='successData&&successData?.success'>
+        <table class="table table-responsive-md">
+            <thead>
+              <tr>
+                <th scope="col">Bus Type</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Arrival</th>
+                <th scope="col">Date</th>
+                <th scope="col">Available</th>
+                <th scope="col">Fare</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let Data of successData.message.data">
+              <tr>
+                <th scope="col">{{Data.BusType}}</th>
+                <th scope="col">{{Data.Departure}}</th>
+                <th scope="col">{{Data.Arraival}}</th>
+                <th scope="col">{{Data.DateOfJourney | date: 'fullDate'}}</th>
+                <th scope="col">{{Data.AvailableSeats}}</th>
+                <th scope="col">{{Data.Fare | currency:'INR'}}</th>
+                <th scope="col"><button class="btn btn-success btn-sm" [disabled]="Data.AvailableSeats<=0"(click)="newEvent(Data)">View Seats</button></th>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    
+</div>

@@ -1,0 +1,46 @@
+.p-img{    
+    margin: 30px auto 10px auto;
+}
+.p-img img{
+    width: 40px;
+    margin-bottom: 20px;
+    color:greenyellow;
+}
+.p-img p{
+    font-size: large;
+}
+.p-img ul{
+    text-align: center;
+}
+.p-img ul li{
+    display: inline-block;
+    width:20%;
+    margin: 30px auto 10px auto;
+}
+ul li .fas{
+    background: white;
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+    padding: 7px;
+}
+.p-img .SuccessBar{
+    width: 20%;
+    position: absolute;
+    z-index: -1;
+    top: 220px;
+}
+.color_green{
+    color:green;
+}
+.color_orange{
+    color:orange;
+}
+.color_red{
+    color:red;
+}
+@media(max-width:800px){
+    .p-img{
+        display:none;
+    }
+}

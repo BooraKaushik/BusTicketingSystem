@@ -1,0 +1,69 @@
+<!-- PAYMENT FORM -->
+<div class="container comp">
+    <div class="my-4 mx-4">
+        <div class="blue_bg d-flex justify-content-around ">
+            <span>Transaction ID:1234</span>
+            <span>{{PaymentFinalData?.TotalFare|currency:'INR'}}</span>
+        </div>
+        <form class="form row" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="col-md-4 my-2">Card Type</div>
+            <div class="col-md-7 my-2">
+                <div class='form-group'>
+                    <div class="form-check form-check-inline ">
+                        <input formControlName="CardType" type="radio" id='Visa' value='Visa' class='form-check-input'>
+                        <label class="form-check-label" for="Visa">Visa</label>
+                    </div>
+                    <div class="form-check form-check-inline ">
+                        <input formControlName="CardType" type="radio" id='MasterCard' value='MasterCard'
+                            class='form-check-input'>
+                        <label class="form-check-label" for="MasterCard">Master Card</label>
+                    </div>
+                </div>
+                <div *ngIf='CardType?.touched && CardType?.errors?.required' class='warn'>
+                    Please select Card Type
+                </div>
+            </div>
+            <div class="col-md-4 my-2">Card Number</div>
+            <div class="col-md-7 my-2">
+                <input type="text" maxlength="16" formControlName="CardNumber" class='form-control'
+                    placeholder='Card Number'>
+                <div *ngIf='CardNumber?.touched && CardNumber?.errors' class='warn'>Please enter a Valid Card Number.
+                </div>
+            </div>
+            <div class="col-md-4">Name on Card</div>
+            <div class="col-md-7 my-2">
+                <input type="text" formControlName="NameOnCard" class='form-control' placeholder='Name on Card'>
+                <div *ngIf='NameOnCard?.touched && NameOnCard?.errors' class='warn'>Please enter a Name.</div>
+            </div>
+            <div class="col-md-4">CVV</div>
+            <div class="col-md-7 my-2">
+                <input type="password" maxlength="3" formControlName="CVV" class='form-control' style="width:150px"
+                    placeholder='CVV'>
+                <div *ngIf='CVV?.touched && CVV?.errors' class='warn'>Please enter a Valid Card Number.</div>
+            </div>
+            <div class="col-md-4">Expiry Date</div>
+            <div class="col-md-7" formGroupName="ExpiryDate">
+                <label for="Month"></label>
+                <select class="form-control form-select date  my-2 mr-2" name="Month" id="Month"
+                    formControlName="Month">
+                    <option disabled selected value="">Month</option>
+                    <option *ngFor="let i of MonthList" value="{{i}}">{{i}}</option>
+                </select>
+                <label for="Year"></label>
+                <select class="form-control form-select date  my-2 mx-md-2" name="Year" id="Year"
+                    formControlName="Year">
+                    <option disabled value="">Year</option>
+                    <option *ngFor="let i of YearList" value="{{i}}">{{i}}</option>
+                </select>
+                <div *ngIf='ExpiryDate?.touched && ExpiryDate?.errors' class='warn'>Please enter a Valid Expiry Date.
+                </div>
+            </div>
+            <div class="my-2">
+                <input type="submit" class="my-2 mx-2 btn btn-primary" [disabled]='form.invalid' placeholder="Submit">
+
+
+                <input type="reset" class="my-2 mx-2 btn btn-danger" placeholder="Reset">
+            </div>
+        </form>
+    </div>
+</div>
